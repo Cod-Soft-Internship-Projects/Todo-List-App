@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todo_list_app/services/db_helper.dart';
 import 'package:todo_list_app/screens/add_task_screen.dart';
 import 'package:todo_list_app/screens/edit_task_screen.dart';
-import 'package:todo_list_app/widgets/toast_message.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -98,8 +97,10 @@ class _HomePageState extends State<HomePage> {
                               )));
                         } else {
                           return ListView.builder(
+                            reverse: true,
                               itemCount: data.length,
                               itemBuilder: (context, index) {
+                                
                                 return InkWell(
                                   onTap: () async {
                                     var refresh = await Navigator.push(
@@ -241,7 +242,6 @@ class _HomePageState extends State<HomePage> {
                                                 await DatabaseHelper.dbInstance
                                                     .deleteRecord(
                                                         data[index]['Id']);
-                                                toastMessage('Task deleted');
                                                 countActiveTasks();
             
                                                 setState(() {});

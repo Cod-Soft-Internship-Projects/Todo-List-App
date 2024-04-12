@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/services/db_helper.dart';
-import 'package:todo_list_app/widgets/toast_message.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -171,7 +170,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           descriptionController.clear();
 
                           Navigator.pop(context, true);
-                          toastMessage('Task added successfully');
                         }
                       },
                       child: Text(

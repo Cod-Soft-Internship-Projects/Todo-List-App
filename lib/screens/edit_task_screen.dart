@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_app/services/db_helper.dart';
-import 'package:todo_list_app/widgets/toast_message.dart';
 
 class EditTaskScreen extends StatefulWidget {
   int id;
@@ -192,7 +191,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           update();
-                          toastMessage('Task updated');
                           Navigator.pop(context, true);
                         }
                       },
