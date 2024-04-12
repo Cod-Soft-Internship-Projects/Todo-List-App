@@ -65,15 +65,15 @@ class DatabaseHelper{
   }
 
   //update method
-  Future<int> updateRecord(Map<String,dynamic> row) async{
+  Future<int> updateRecord(Map<String,dynamic> row, int id) async{
     Database? db = await dbInstance.database;
-    int id = row[Id];
-    return await db!.update(dbTable, row, where: '$id = ?' , whereArgs: [id] );
+    // int id = row[Id];
+    return await db!.update(dbTable, row, where: '$Id = ?' , whereArgs: [id] );
   }
 
   //delete method
   Future<int> deleteRecord(int id) async{
     Database? db = await dbInstance.database;
-    return await db!.delete(dbTable, where: '$id = ?' , whereArgs: [id] );
+    return await db!.delete(dbTable, where: '$Id = ?' , whereArgs: [id] );
   }
 }
