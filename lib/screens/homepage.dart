@@ -97,7 +97,6 @@ class _HomePageState extends State<HomePage> {
                               )));
                         } else {
                           return ListView.builder(
-                            reverse: true,
                               itemCount: data.length,
                               itemBuilder: (context, index) {
                                 
