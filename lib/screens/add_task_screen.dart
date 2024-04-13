@@ -19,169 +19,185 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: Text('Add New Task'),
-        centerTitle: true,
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
-          child: Container(
-            height: 650,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Title',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextFormField(
-                    controller: titleController,
-                    decoration: InputDecoration(
-                        hintText: 'Input title',
-                        filled: true,
-                        fillColor: Colors.grey.shade300,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Title is required';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Description',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextFormField(
-                    controller: descriptionController,
-                    maxLines: 10,
-                    decoration: InputDecoration(
-                        hintText: 'Write a description (Optional)',
-                        filled: true,
-                        fillColor: Colors.grey.shade300,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Priority',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.grey.shade300,
+    return PopScope(
+      onPopInvoked: (didPop) {
+        if(_formKey.currentState!.validate()){
+          insert();
+        }
+        
+        titleController.clear();
+        descriptionController.clear();
+        
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          title: Text('Add New Task'),
+          centerTitle: true,
+          backgroundColor: Colors.blueAccent,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+            child: Container(
+              height: 650,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Title',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    TextFormField(
+                      textCapitalization: TextCapitalization.sentences,
+                      controller: titleController,
+                      decoration: InputDecoration(
+                          hintText: 'Input title',
+                          filled: true,
+                          fillColor: Colors.grey.shade300,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Title is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Description',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    TextFormField(
+                                          textCapitalization: TextCapitalization.sentences,
+      
+                      controller: descriptionController,
+                      maxLines: 10,
+                      decoration: InputDecoration(
+                          hintText: 'Write a description (Optional)',
+                          filled: true,
+                          fillColor: Colors.grey.shade300,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Priority',
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  value: dropDownPriorityValue,
-                                  icon: Icon(Icons.keyboard_arrow_down),
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      dropDownPriorityValue = newValue!;
-                                    });
-                                  },
-                                  items: [
-                                    DropdownMenuItem<String>(
-                                      value: 'High',
-                                      child: Text('High'),
-                                    ),
-                                    DropdownMenuItem<String>(
-                                      value: 'Medium',
-                                      child: Text('Medium'),
-                                    ),
-                                    DropdownMenuItem<String>(
-                                      value: 'Low',
-                                      child: Text('Low'),
-                                    ),
-                                  ],
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.grey.shade300,
+                                ),
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: dropDownPriorityValue,
+                                    icon: Icon(Icons.keyboard_arrow_down),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropDownPriorityValue = newValue!;
+                                      });
+                                    },
+                                    items: [
+                                      DropdownMenuItem<String>(
+                                        value: 'High',
+                                        child: Text('High'),
+                                      ),
+                                      DropdownMenuItem<String>(
+                                        value: 'Medium',
+                                        child: Text('Medium'),
+                                      ),
+                                      DropdownMenuItem<String>(
+                                        value: 'Low',
+                                        child: Text('Low'),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Due date',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                final DateTime? dateTime = await showDatePicker(
-                                  context: context,
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(3000),
-                                );
-                                if (dateTime != null) {
-                                  setState(() {
-                                    selectedDate = dateTime;
-                                  });
-                                }
-                              },
-                              child: Chip(padding: EdgeInsets.all(14),backgroundColor: Colors.grey.shade300,
-                                label: Text(
-                                    '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}'),
-                                avatar: Icon(Icons.date_range),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 50,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Due date',
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Spacer(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          insert();
-                          titleController.clear();
-                          descriptionController.clear();
-
-                          Navigator.pop(context, true);
-                        }
-                      },
-                      child: Text(
-                        'Save',
-                        style: TextStyle(color: Colors.white),
+                              InkWell(
+                                onTap: () async {
+                                  final DateTime? dateTime = await showDatePicker(
+                                    context: context,
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(3000),
+                                  );
+                                  if (dateTime != null) {
+                                    setState(() {
+                                      selectedDate = dateTime;
+                                    });
+                                  }
+                                },
+                                child: Chip(
+                                  padding: EdgeInsets.all(14),
+                                  backgroundColor: Colors.grey.shade300,
+                                  label: Text(
+                                      '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}'),
+                                  avatar: Icon(Icons.date_range),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
                       ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueAccent,
+                    ),
+                    Spacer(),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            insert();
+                            titleController.clear();
+                            descriptionController.clear();
+      
+                            Navigator.pop(context, true);
+                          }
+                        },
+                        child: Text(
+                          'Save',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

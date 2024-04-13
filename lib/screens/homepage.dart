@@ -207,31 +207,27 @@ class _HomePageState extends State<HomePage> {
                                                 ConstrainedBox(
                                                   
                                                   constraints: BoxConstraints(maxWidth: 150),
-                                                  child: Expanded(
-                                                    child: Text(
-                                                      data[index]['Title'],
-                                                      maxLines: 1,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
+                                                  child: Text(
+                                                    data[index]['Title'],
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600),
                                                   ),
                                                 ),
                                                 ConstrainedBox(
                                                   constraints: BoxConstraints(maxWidth: 150),
-                                                  child: Expanded(
-                                                    child: Text(
-                                                      data[index]
-                                                                ['Description'] ==
-                                                            ''
-                                                        ? 'No description written'
-                                                        : data[index]
-                                                            ['Description'],
-                                                            maxLines: 1,
-                                                            overflow: TextOverflow.ellipsis,),
-                                                  ),
+                                                  child: Text(
+                                                    data[index]
+                                                              ['Description'] ==
+                                                          ''
+                                                      ? 'No description written'
+                                                      : data[index]
+                                                          ['Description'],
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,),
                                                 )
                                               ],
                                             ),
